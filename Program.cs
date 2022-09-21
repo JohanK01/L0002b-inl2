@@ -5,12 +5,14 @@ while (status)
     Console.WriteLine("Lägga in säljare: 1");
     Console.WriteLine("Visa lista över säljare: 2");
     Console.WriteLine("Avsluta program: 3");
+
     int navigate = Int32.Parse(Console.ReadLine());
     Console.Clear();
 
     switch (navigate)
     {
         case 1:
+            //Här lägger man in personer i en List<T>
             Console.WriteLine("Namn, Personnummer, Distrikt, Artiklar sålda");
             people.Add(new SalesMen()
             {
@@ -23,13 +25,16 @@ while (status)
 
             break;
         case 2:
+            //här soteras alla utifrån hur mycket dem har sålt
             Console.WriteLine("Namn Personnunmmer Distrikt Artiklar");
 
+            //här skrivs resultatet ner i en fil
             string fileName = "Resultat.txt";
             FileStream fs = null;
             fs = new FileStream(fileName, FileMode.OpenOrCreate);
-
             StreamWriter tw = new StreamWriter(fs);
+
+            //sortering 
             people.Sort((x, y) => x.Artiklar.CompareTo(y.Artiklar));
 
             int lvl1 = people.FindAll(x => x.Artiklar < 50).Count();
@@ -71,6 +76,8 @@ while (status)
 
             }
             Console.WriteLine($"{lvl4} över 200");
+
+            //här stängs Resultat.txt filen
             tw.Close();
             break;
 
