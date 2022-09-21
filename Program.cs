@@ -1,6 +1,4 @@
-﻿
-List<SalesMen> people = new List<SalesMen>();
-int[] lvl = { 50, 99, 199 };
+﻿List<SalesMen> people = new List<SalesMen>();
 bool status = true;
 while (status)
 {
@@ -26,19 +24,32 @@ while (status)
             break;
         case 2:
             Console.WriteLine("Namn Personnunmmer Distrikt Artiklar");
+
+            string fileName = "Resultat.txt";
+            FileStream fs = null;
+            fs = new FileStream(fileName, FileMode.OpenOrCreate);
+
+            StreamWriter tw = new StreamWriter(fs);
             people.Sort((x, y) => x.Artiklar.CompareTo(y.Artiklar));
 
             int lvl1 = people.FindAll(x => x.Artiklar < 50).Count();
             foreach (var p in people.FindAll(x => x.Artiklar < 50))
             {
+
                 Console.WriteLine($"{p.Namn} {p.Personnummer} {p.Distrikt} {p.Artiklar}");
+                tw.WriteLine($"{p.Namn} {p.Personnummer} {p.Distrikt} {p.Artiklar}")
+
+
             }
             Console.WriteLine($"{lvl1} under 50");
 
-            int lvl2 = people.FindAll(x => x.Artiklar >=50 && x.Artiklar <= 99).Count();
-            foreach (var p in people.FindAll(x => x.Artiklar >=50 && x.Artiklar <=99))
+            int lvl2 = people.FindAll(x => x.Artiklar >= 50 && x.Artiklar <= 99).Count();
+            foreach (var p in people.FindAll(x => x.Artiklar >= 50 && x.Artiklar <= 99))
             {
                 Console.WriteLine($"{p.Namn} {p.Personnummer} {p.Distrikt} {p.Artiklar}");
+                tw.WriteLine($"{p.Namn} {p.Personnummer} {p.Distrikt} {p.Artiklar}");
+
+
             }
             Console.WriteLine($"{lvl2} mellan 50-99");
 
@@ -46,6 +57,9 @@ while (status)
             foreach (var p in people.FindAll(x => x.Artiklar >= 100 && x.Artiklar <= 199))
             {
                 Console.WriteLine($"{p.Namn} {p.Personnummer} {p.Distrikt} {p.Artiklar}");
+                tw.WriteLine($"{p.Namn} {p.Personnummer} {p.Distrikt} {p.Artiklar}");
+
+
             }
             Console.WriteLine($"{lvl3} mellan 100-199");
 
@@ -53,9 +67,11 @@ while (status)
             foreach (var p in people.FindAll(x => x.Artiklar > 200))
             {
                 Console.WriteLine($"{p.Namn} {p.Personnummer} {p.Distrikt} {p.Artiklar}");
+                tw.WriteLine($"{p.Namn} {p.Personnummer} {p.Distrikt} {p.Artiklar}");
+
             }
             Console.WriteLine($"{lvl4} över 200");
-
+            tw.Close();
             break;
 
         case 3:
